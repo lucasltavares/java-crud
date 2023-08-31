@@ -71,7 +71,7 @@ public class clienteDao implements Crud{
 				cliente.setCpf(resultset.getString("cpf"));
 				cliente.setNome(resultset.getString("nome"));
 				cliente.setNascimento(resultset.getString("nascimento"));
-				cliente.setSituacao(resultset.getString("nome"));
+				cliente.setSituacao(resultset.getString("situacao"));
 				
 				clientes.add(cliente);
 			}
@@ -89,10 +89,53 @@ public class clienteDao implements Crud{
 	}
 	
 	public static Cliente findByPk(int clienteId) {
-		return null;
+		
+		sql = String.format("SELECT * FROM clientes WHERE id = %d", clienteId);
+		
+		try {
+			
+			Statement statement = conn.createStatement();
+			ResultSet resultset = statement.executeQuery(sql);
+			Cliente cliente = new Cliente();
+			
+			while (resultset.next()) {
+				
+				
+				cliente.setId(resultset.getInt("id"));
+				cliente.setCpf(resultset.getString("cpf"));
+				cliente.setNome(resultset.getString("nome"));
+				cliente.setNascimento(resultset.getString("nascimento"));
+				cliente.setSituacao(resultset.getString("situacao"));
+				
+			}
+			
+			System.out.println("--correct find by pkclientes");
+			return cliente;
+					
+		} catch(SQLException e) {
+			System.out.println("--incorrect find by pk clientes" + e.getMessage());
+			return null;
+		}
 	}
 	
 	public static void update(Cliente cliente) {
+		sql = "UPDATE clientes set nome=?, cpf=?, nascimento=?, situacao=? WHERE id = ?";
 		
+		try {
+			PreparedStatement ps = conn.prepareStatement(sql);
+			
+			ps.setString(1, cliente.getNome());
+			ps.setString(2, cliente.getCpf());
+			ps.setString(3, cliente.getNascimento());
+			ps.setString(4, cliente.getSituacao());
+			ps.setInt(5, cliente.getId());
+			
+			ps.executeUpdate();
+			
+			System.out.println("--Correct update on database");
+			
+		} catch(SQLException e) {
+			System.out.println("--Incorrect update on database. " + e.getMessage());
+		}
 	}
 }

@@ -27,4 +27,14 @@
     <servlet-name>ClienteCreateAndFInd</servlet-name>
     <url-pattern>/CreateAndFind</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>ClienteFindAndUpdate</display-name>
+    <servlet-name>ClienteFindAndUpdate</servlet-name>
+    <servlet-class>controllers.ClienteFindAndUpdate</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ClienteFindAndUpdate</servlet-name>
+    <url-pattern>/ClienteUpdate</url-pattern>
+  </servlet-mapping>
 </web-app>
